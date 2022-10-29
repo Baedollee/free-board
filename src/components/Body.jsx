@@ -4,14 +4,22 @@ import React from 'react';
 //Component import
 import Navbar from './Navbar';
 import Search from './Search';
+import Content from './Content';
+import styled from 'styled-components';
 
 const Body = () => {
   return (
-    <div>
+    <BodyWrap>
       <Search />
       <Navbar />
-    </div>
+      <Content />
+    </BodyWrap>
   );
 };
+
+const BodyWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export default Body;

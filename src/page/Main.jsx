@@ -5,13 +5,22 @@ import React from 'react';
 import Header from '../components/Header';
 import Body from '../components/Body';
 
+// Package import
+import styled from 'styled-components';
+
 const Main = () => {
   return (
-    <div>
+    <MainWrap>
       <Header />
       <Body />
-    </div>
+    </MainWrap>
   );
 };
+
+const MainWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 35px;
+`;
 
 export default Main;

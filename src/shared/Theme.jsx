@@ -2,6 +2,7 @@ const fontSizes = {
   xl: '50px',
   lg: '30px',
   md: '20px',
+  ms: '15px',
   sm: '10px',
 };
 

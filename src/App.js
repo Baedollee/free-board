@@ -1,9 +1,15 @@
 //Package import
 import { Route, Routes } from 'react-router-dom';
-import styled from 'styled-components';
+
+//page import
+import Main from './page/Main';
 
 function App() {
-  return <div></div>;
+  return (
+    <Routes>
+      <Route path='/' element={<Main />} />
+    </Routes>
+  );
 }
 
 export default App;

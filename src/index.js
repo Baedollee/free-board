@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 
 // Component & Shared import
 import App from './App';
-import { Theme } from './shared/Theme';
+import Theme from './shared/Theme';
 import reportWebVitals from './reportWebVitals';
 
 // Style import

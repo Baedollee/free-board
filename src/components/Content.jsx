@@ -19,6 +19,7 @@ const ContentWrap = styled.div`
   display: flex;
   padding: 18px;
 `;
+
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;

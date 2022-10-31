@@ -4,7 +4,7 @@ import React from 'react';
 // Package import
 import styled from 'styled-components';
 
-const Navbar = () => {
+const Navbar = ({ isCheck, setIsCheck }) => {
   return (
     <NavbarWrap>
       <div>A Posts</div>

@@ -29,12 +29,18 @@ const SearchContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   border: 1px solid ${(props) => props.theme.colors.Gray1};
   border-radius: 5px;
+
   width: 310px;
   height: 30px;
   padding: 10px 20px;
   gap: 10px;
+
+  :hover {
+    border: 1px solid ${(props) => props.theme.colors.Blue};
+  }
 
   div {
     display: flex;

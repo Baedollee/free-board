@@ -40,7 +40,6 @@ const Navbar = ({
 const NavbarWrap = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
   margin-bottom: 7px;
   border-bottom: 1px solid ${(props) => props.theme.colors.Gray2};
 
@@ -49,8 +48,13 @@ const NavbarWrap = styled.div`
     padding: 10px;
     border: 0;
     outline: 0;
-    background-color: white;
+    background-color: ${(props) => props.theme.colors.White};
     font-size: ${(props) => props.theme.fontSizes.ms};
+
+    cursor: pointer;
+    :hover {
+      background-color: ${(props) => props.theme.colors.SkyBlue};
+    }
   }
 `;
 const SelectA = styled.button`

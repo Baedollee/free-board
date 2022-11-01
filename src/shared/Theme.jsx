@@ -3,7 +3,7 @@ const fontSizes = {
   lg: '30px',
   md: '20px',
   ms: '15px',
-  sm: '10px',
+  sm: '13px',
 };
 
 const colors = {
@@ -11,6 +11,7 @@ const colors = {
   Gray1: '#C5D0E1',
   Gray2: '#A5A9B6',
   Blue: '#4D71FF',
+  SkyBlue: '#E9F3FF',
   White: '#FFFFFF',
 };
 export const Theme = { fontSizes, colors };

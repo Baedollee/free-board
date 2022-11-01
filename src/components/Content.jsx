@@ -1,48 +1,36 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  a_contentList,
+  b_contentList,
+  clearItem,
+  resetPaging,
+} from '../redux/modules/ListSlice';
 
 const Content = ({ a_checked }) => {
-  const url = 'https://recruit-api.yonple.com/recruit/652179';
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
+  const { item: data, type, paging } = useSelector((state) => state.list);
+  console.log(data, type, paging);
 
-  const infinityScroll = { loading: false, followingItem: true, paging: 0 };
+  const searchData = useSelector((state) => state.search.searchList);
 
   useEffect(() => {
-    if (a_checked === true) {
-      axios
-        .get(`${url}/a-posts?page=${infinityScroll.paging}`)
-        .then((res) => {
-          setData(res?.data);
-          infinityScroll.loading = false;
-          infinityScroll.paging = infinityScroll.paging + 1;
-        })
-        .catch((err) => {
-          console.log(err.response);
-          infinityScroll.loading = false;
-        });
-
-      return () => {
-        setData([]);
-      };
+    if (type === 'a') {
+      dispatch(a_contentList());
     } else {
-      axios
-        .get(`${url}/b-posts?page=${infinityScroll.paging}`)
-        .then((res) => {
-          setData(res?.data);
-        })
-        .catch((err) => console.log(err.response));
-
-      return () => {
-        setData([]);
-      };
+      dispatch(b_contentList());
     }
+  }, [type]);
 
-    // dispatch(a_contentList());
-  }, [JSON.stringify(a_checked)]);
+  useEffect(() => {
+    return () => {
+      dispatch(resetPaging());
+      dispatch(clearItem());
+    };
+  }, [type]);
 
   return (
     <ContentWrap>

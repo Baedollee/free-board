@@ -28,9 +28,12 @@ const Body = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(`${url}/a-posts`).then((response) => {
-      setData(...data, response.data);
-    });
+    axios
+      .get(`${url}/a-posts`)
+      .then((response) => {
+        setData(...data, response.data);
+      })
+      .catch((error) => console.log(error.response));
     // dispatch(a_contentList());
   }, []);
   console.log(data);

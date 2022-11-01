@@ -8,11 +8,11 @@ const initialState = {
   item: [],
 };
 
-export const contentList = createAsyncThunk(
+export const a_contentList = createAsyncThunk(
   'getContentList',
   async (payload, thunkAPI) => {
     try {
-      const response = await api.get(`/a-posts`);
+      const response = await api.get('/a-posts');
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -25,10 +25,10 @@ const listSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [contentList.fulfilled]: (state, action) => {
+    [a_contentList.fulfilled]: (state, action) => {
       state.item = action.item;
     },
-    [contentList.rejected]: (state, action) => {
+    [a_contentList.rejected]: (state, action) => {
       console.log(action);
     },
   },

@@ -22,7 +22,10 @@ const Body = () => {
 const BodyWrap = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 35px;
+  padding: 35px 300px;
+  @media (max-width: 1000px) {
+    padding: 35px 100px;
+  }
 `;
 
 export default Body;

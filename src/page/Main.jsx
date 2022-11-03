@@ -16,6 +16,7 @@ import {
 // Package import
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
+import { useRef } from 'react';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ const Main = () => {
     let scrollTopHandler = e.target.scrollTop;
     let clientHeightHandler = e.target.clientHeight;
     let scrollHeightHandler = e.target.scrollHeight;
+
+    localStorage.setItem('scroll', scrollTopHandler);
 
     if (scrollHeightHandler - clientHeightHandler - scrollTopHandler - 50 < 0) {
       if (searchWord.length === 0) {

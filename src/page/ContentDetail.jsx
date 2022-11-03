@@ -23,6 +23,9 @@ const ContentDetail = () => {
     })
     .catch((err) => console.log(err.response));
 
+  const scrollState = localStorage.getItem('scroll');
+  console.log(scrollState);
+
   return (
     <DetailWrap>
       <DetailContainer>

@@ -7619,6 +7619,11 @@ react-scripts@5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
+react-scroll-restoration@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/react-scroll-restoration/-/react-scroll-restoration-1.0.10.tgz#313d8086c6c5a49b42744c9ed0fbb70038dc5e94"
+  integrity sha512-9WAN30FDf5ogzv0ZA2Xf1igXxXp2v/TuEwp0saOGSCTs7iTpc7atoTSGmQinhOqHWSjl0dde76jm/GOVxu0oFw==
+
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"

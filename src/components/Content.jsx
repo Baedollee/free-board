@@ -1,40 +1,50 @@
+// React import
 import React, { useEffect } from 'react';
+
+// Redux import
+import { useSelector, useDispatch } from 'react-redux';
+
+// Package import
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+
 import {
   a_contentList,
   b_contentList,
+  a_searchDataList,
+  b_searchDataList,
   clearItem,
   resetPaging,
 } from '../redux/modules/ListSlice';
 
-const Content = ({ a_checked }) => {
+const Content = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { item: data, type, paging } = useSelector((state) => state.list);
-  console.log(data, type, paging);
-
-  const searchData = useSelector((state) => state.search.searchList);
+  const { searchWord, itemList, type } = useSelector((state) => state.list);
 
   useEffect(() => {
     if (type === 'a') {
-      dispatch(a_contentList());
+      if (searchWord.length === 0) {
+        dispatch(a_contentList());
+      } else {
+        dispatch(a_searchDataList(searchWord));
+      }
     } else {
-      dispatch(b_contentList());
+      if (searchWord.length === 0) {
+        dispatch(b_contentList());
+      } else {
+        dispatch(b_searchDataList(searchWord));
+      }
     }
-  }, [type]);
-
-  useEffect(() => {
     return () => {
       dispatch(resetPaging());
       dispatch(clearItem());
     };
-  }, [type]);
+  }, [type, searchWord]);
 
   return (
     <ContentWrap>
-      {data?.map((item, index) => {
+      {itemList.map((item, index) => {
         return (
           <ContentContainer
             onClick={() =>

@@ -1,15 +1,19 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+// React import
+import React, { useState } from 'react';
+
+// Package import
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+// Shared import
+import axios from 'axios';
 import { Back } from '../shared';
 
 const ContentDetail = () => {
   const url = 'https://recruit-api.yonple.com/recruit/652179';
   const navigate = useNavigate();
   const location = useLocation();
-  const id = location.state.id;
-  const type = location.state.type;
+  const { id, type } = location.state;
   const [data, setData] = useState([]);
 
   axios
@@ -19,7 +23,6 @@ const ContentDetail = () => {
     })
     .catch((err) => console.log(err.response));
 
-  console.log(data);
   return (
     <DetailWrap>
       <DetailContainer>

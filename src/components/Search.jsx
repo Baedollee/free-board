@@ -1,18 +1,19 @@
 // React import
-import React, { useEffect } from 'react';
+import React from 'react';
+
+// Redux import
+import { searchAction } from '../redux/modules/ListSlice';
 
 // Package import
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 
 //Shared import
 import { SearchDelete, SearchImg } from '../shared';
-import { useDispatch } from 'react-redux';
-import { searchAction } from '../redux/modules/SearchSlice';
-import { useSelector } from 'react-redux';
 
 const Search = () => {
   const dispatch = useDispatch();
-  const searchData = useSelector((state) => state.search.searchList);
+  const { searchWord } = useSelector((state) => state.list);
 
   const onChangeHandler = (e) => {
     dispatch(searchAction(e.target.value));
@@ -32,10 +33,10 @@ const Search = () => {
           type='text'
           placeholder='검색어를 입력하세요'
           autoFocus
-          value={searchData}
+          value={searchWord}
           onChange={onChangeHandler}
         />
-        {searchData === '' ? (
+        {searchWord === '' ? (
           <></>
         ) : (
           <SearchDelete onClick={() => reset()} style={{ cursor: 'pointer' }} />

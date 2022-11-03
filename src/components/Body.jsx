@@ -5,6 +5,8 @@ import React from 'react';
 import Navbar from './Navbar';
 import Search from './Search';
 import Content from './Content';
+
+// Package import
 import styled from 'styled-components';
 
 const Body = () => {

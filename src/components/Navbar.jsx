@@ -1,10 +1,12 @@
 // React import
 import React from 'react';
 
-// Package import
-import styled from 'styled-components';
+// Redux import
 import { useDispatch, useSelector } from 'react-redux';
 import { selectType } from '../redux/modules/ListSlice';
+
+// Package import
+import styled from 'styled-components';
 
 const Navbar = () => {
   const dispatch = useDispatch();

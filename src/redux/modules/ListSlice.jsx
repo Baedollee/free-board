@@ -5,7 +5,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../../shared/Api';
 
 const initialState = {
-  item: [],
+  itemList: [],
+  searchWord: '',
   type: 'a',
   loading: false,
   followingItem: true,
@@ -13,7 +14,7 @@ const initialState = {
 };
 
 export const a_contentList = createAsyncThunk(
-  'getContentList',
+  'getAContentList',
   async (payload, thunkAPI) => {
     try {
       const { paging } = thunkAPI.getState().list;
@@ -28,11 +29,45 @@ export const a_contentList = createAsyncThunk(
   }
 );
 export const b_contentList = createAsyncThunk(
-  'getContentList',
+  'getBContentList',
   async (payload, thunkAPI) => {
     try {
       const { paging } = thunkAPI.getState().list;
       const response = await api.get(`/b-posts?page=${paging}`);
+      if (response?.data && response?.data <= 0) {
+        thunkAPI.dispatch(noFollowingItem());
+      }
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+export const a_searchDataList = createAsyncThunk(
+  'getASearchList',
+  async (payload, thunkAPI) => {
+    try {
+      const { paging } = thunkAPI.getState().list;
+      const response = await api.get(
+        `/a-posts?page=${paging}&search=${payload}`
+      );
+      if (response?.data && response?.data <= 0) {
+        thunkAPI.dispatch(noFollowingItem());
+      }
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+export const b_searchDataList = createAsyncThunk(
+  'getBSearchList',
+  async (payload, thunkAPI) => {
+    try {
+      const { paging } = thunkAPI.getState().list;
+      const response = await api.get(
+        `/b-posts?page=${paging}&search=${payload}`
+      );
       if (response?.data && response?.data <= 0) {
         thunkAPI.dispatch(noFollowingItem());
       }
@@ -53,18 +88,25 @@ const listSlice = createSlice({
     resetPaging: (state, action) => {
       state.paging = 0;
     },
-    clearItem: (state, action) => {
-      state.item = [];
-    },
     selectType: (state, action) => {
       state.type = action.payload;
+    },
+    searchAction: (state, action) => {
+      state.searchWord = action.payload;
+    },
+    clearItem: (state, action) => {
+      state.itemList = [];
+      state.followingItem = true;
+    },
+    clearSearch: (state, action) => {
+      state.searchWord = [];
     },
   },
   extraReducers: {
     [a_contentList.fulfilled]: (state, action) => {
-      state.item = [...state.item, ...action.payload];
-      state.loading = false;
+      state.itemList = [...state.itemList, ...action.payload];
       state.paging = state.paging + 1;
+      state.loading = false;
     },
     [a_contentList.rejected]: (state, action) => {
       console.log(action);
@@ -73,9 +115,9 @@ const listSlice = createSlice({
       state.loading = true;
     },
     [b_contentList.fulfilled]: (state, action) => {
-      state.item = [...state.item, ...action.payload];
-      state.loading = false;
+      state.itemList = [...state.itemList, ...action.payload];
       state.paging = state.paging + 1;
+      state.loading = false;
     },
     [b_contentList.rejected]: (state, action) => {
       console.log(action);
@@ -83,9 +125,37 @@ const listSlice = createSlice({
     [b_contentList.pending]: (state, action) => {
       state.loading = true;
     },
+    [a_searchDataList.fulfilled]: (state, action) => {
+      state.itemList = [...state.itemList, ...action.payload];
+      state.paging = state.paging + 1;
+      state.loading = false;
+    },
+    [a_searchDataList.rejected]: (state, action) => {
+      console.log(action);
+    },
+    [a_searchDataList.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [b_searchDataList.fulfilled]: (state, action) => {
+      state.itemList = [...state.itemList, ...action.payload];
+      state.paging = state.paging + 1;
+      state.loading = false;
+    },
+    [b_searchDataList.rejected]: (state, action) => {
+      console.log(action);
+    },
+    [a_searchDataList.pending]: (state, action) => {
+      state.loading = true;
+    },
   },
 });
 
-export const { noFollowingItem, resetPaging, clearItem, selectType } =
-  listSlice.actions;
+export const {
+  noFollowingItem,
+  resetPaging,
+  clearItem,
+  selectType,
+  searchAction,
+  clearSearch,
+} = listSlice.actions;
 export default listSlice.reducer;

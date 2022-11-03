@@ -1,52 +1,50 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+// React import
+import React, { useEffect } from 'react';
+
+// Redux import
+import { useSelector, useDispatch } from 'react-redux';
+
+// Package import
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Content = ({ a_checked }) => {
-  const url = 'https://recruit-api.yonple.com/recruit/652179';
+import {
+  a_contentList,
+  b_contentList,
+  a_searchDataList,
+  b_searchDataList,
+  clearItem,
+  resetPaging,
+} from '../redux/modules/ListSlice';
 
+const Content = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
-
-  const infinityScroll = { loading: false, followingItem: true, paging: 0 };
+  const { searchWord, itemList, type } = useSelector((state) => state.list);
 
   useEffect(() => {
-    if (a_checked === true) {
-      axios
-        .get(`${url}/a-posts?page=${infinityScroll.paging}`)
-        .then((res) => {
-          setData(res?.data);
-          infinityScroll.loading = false;
-          infinityScroll.paging = infinityScroll.paging + 1;
-        })
-        .catch((err) => {
-          console.log(err.response);
-          infinityScroll.loading = false;
-        });
-
-      return () => {
-        setData([]);
-      };
+    if (type === 'a') {
+      if (searchWord.length === 0) {
+        dispatch(a_contentList());
+      } else {
+        dispatch(a_searchDataList(searchWord));
+      }
     } else {
-      axios
-        .get(`${url}/b-posts?page=${infinityScroll.paging}`)
-        .then((res) => {
-          setData(res?.data);
-        })
-        .catch((err) => console.log(err.response));
-
-      return () => {
-        setData([]);
-      };
+      if (searchWord.length === 0) {
+        dispatch(b_contentList());
+      } else {
+        dispatch(b_searchDataList(searchWord));
+      }
     }
-
-    // dispatch(a_contentList());
-  }, [JSON.stringify(a_checked)]);
+    return () => {
+      dispatch(resetPaging());
+      dispatch(clearItem());
+    };
+  }, [type, searchWord]);
 
   return (
     <ContentWrap>
-      {data?.map((item, index) => {
+      {itemList.map((item, index) => {
         return (
           <ContentContainer
             onClick={() =>

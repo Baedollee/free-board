@@ -1,36 +1,23 @@
 // React import
 import React from 'react';
 
+// Redux import
+import { useDispatch, useSelector } from 'react-redux';
+import { selectType } from '../redux/modules/ListSlice';
+
 // Package import
 import styled from 'styled-components';
 
-const Navbar = ({
-  a_checked,
-  setA_checked,
-  b_checked,
-  setB_checked,
-  check,
-  setCheck,
-}) => {
-  const aSelect = () => {
-    setA_checked(true);
-    setB_checked(false);
-    // setCheck(...check, (check.a = true));
-    // setCheck(...check, (check.b = false));
-  };
-  const bSelect = () => {
-    setB_checked(true);
-    setA_checked(false);
-    // setCheck(...check, (check.b = true));
-    // setCheck(...check, (check.a = false));
-  };
+const Navbar = () => {
+  const dispatch = useDispatch();
+  const type = useSelector((state) => state.list.type);
 
   return (
     <NavbarWrap>
-      <SelectA onClick={() => aSelect()} state={a_checked}>
+      <SelectA onClick={() => dispatch(selectType('a'))} state={type}>
         A Posts
       </SelectA>
-      <SelectB onClick={() => bSelect()} state={b_checked}>
+      <SelectB onClick={() => dispatch(selectType('b'))} state={type}>
         B Posts
       </SelectB>
     </NavbarWrap>
@@ -59,11 +46,15 @@ const NavbarWrap = styled.div`
 `;
 const SelectA = styled.button`
   color: ${(props) =>
-    props.state ? `${props.theme.colors.Blue}` : `${props.theme.colors.Black}`};
+    props.state === 'a'
+      ? `${props.theme.colors.Blue}`
+      : `${props.theme.colors.Black}`};
 `;
 const SelectB = styled.button`
   color: ${(props) =>
-    props.state ? `${props.theme.colors.Blue}` : `${props.theme.colors.Black}`};
+    props.state === 'b'
+      ? `${props.theme.colors.Blue}`
+      : `${props.theme.colors.Black}`};
 `;
 
 export default Navbar;

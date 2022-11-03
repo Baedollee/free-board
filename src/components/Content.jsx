@@ -3,11 +3,6 @@ import React, { useEffect } from 'react';
 
 // Redux import
 import { useSelector, useDispatch } from 'react-redux';
-
-// Package import
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-
 import {
   a_contentList,
   b_contentList,
@@ -17,30 +12,38 @@ import {
   resetPaging,
 } from '../redux/modules/ListSlice';
 
+// Package import
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+//Hook import
+import useDebounce from './hooks/useDebounce';
+
 const Content = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { searchWord, itemList, type } = useSelector((state) => state.list);
+  const debounce = useDebounce(searchWord);
 
   useEffect(() => {
     if (type === 'a') {
-      if (searchWord.length === 0) {
+      if (debounce.length === 0) {
         dispatch(a_contentList());
       } else {
-        dispatch(a_searchDataList(searchWord));
+        dispatch(a_searchDataList(debounce));
       }
     } else {
-      if (searchWord.length === 0) {
+      if (debounce.length === 0) {
         dispatch(b_contentList());
       } else {
-        dispatch(b_searchDataList(searchWord));
+        dispatch(b_searchDataList(debounce));
       }
     }
     return () => {
       dispatch(resetPaging());
       dispatch(clearItem());
     };
-  }, [type, searchWord]);
+  }, [type, debounce]);
 
   return (
     <ContentWrap>

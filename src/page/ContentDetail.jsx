@@ -41,7 +41,10 @@ const ContentDetail = () => {
 const DetailWrap = styled.div`
   display: flex;
   margin: 70px 0px;
-  padding: 35px;
+  padding: 35px 300px;
+  @media (max-width: 1000px) {
+    padding: 35px 100px;
+  }
 `;
 const DetailContainer = styled.div`
   display: flex;

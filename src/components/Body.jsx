@@ -4,14 +4,25 @@ import React from 'react';
 //Component import
 import Navbar from './Navbar';
 import Search from './Search';
+import Content from './Content';
+
+// Package import
+import styled from 'styled-components';
 
 const Body = () => {
   return (
-    <div>
+    <BodyWrap>
       <Search />
       <Navbar />
-    </div>
+      <Content />
+    </BodyWrap>
   );
 };
+
+const BodyWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 35px;
+`;
 
 export default Body;
